@@ -14,5 +14,5 @@ Aishell is an open-source Chinese Mandarin speech corpus published by Beijing Sh
 # Dependency
 Python = 3.8.10
 Pytorch = 2.1.0
-# useage
+# usage
 coming soon
