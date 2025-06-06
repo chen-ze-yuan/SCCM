@@ -1,18 +1,19 @@
 # SCCM
 This is a speech-transformer model for end-to-end speech recognition. If you have any questions, please email to me. (2113301009@gxu.edu.cn)
-# Dataset
-Aishell is an open-source Chinese Mandarin speech corpus published by Beijing Shell Shell Technology Co.,Ltd.
-
-400 people from different accent areas in China are invited to participate in the recording, which is conducted in a quiet indoor environment using high fidelity microphone and downsampled to 16kHz. The manual transcription accuracy is above 95%, through professional speech annotation and strict quality inspection. The data is free for academic use. We hope to provide moderate amount of data for new researchers in the field of speech recognition.
-@inproceedings{aishell_2017,
-  title={AIShell-1: An Open-Source Mandarin Speech Corpus and A Speech Recognition Baseline},
-  author={Hui Bu, Jiayu Du, Xingyu Na, Bengu Wu, Hao Zheng},
-  booktitle={Oriental COCOSDA 2017},
-  pages={Submitted},
-  year={2017}
-}
-# Dependency
-Python = 3.8.10
-Pytorch = 2.1.0
-# usage
-coming soon
+# Overview
+This repository includes:
+- Key components of the model architecture
+- Annotation and metadata descriptions
+﻿
+- 🔗 [AiShell-1 Corpus Download](https://www.aishelltech.com/kysjcp)
+﻿
+No private or proprietary data was used. All results can be reproduced using this publicly available dataset and the provided annotation formats.
+# Folder Structure
+﻿
+```bash
+.
+├── model/                 # Model architecture components (e.g., CNN, Transformer, Mamba layers)
+├── datalist/              # Sample annotation formats (e.g., pinyin, initials, finals)
+├── *                      # Utility functions (e.g., token mapping, masking)
+├── README.md              # This file
+└── LICENSE                
