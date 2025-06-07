@@ -11,3 +11,7 @@ This repository includes:
 ﻿
 No private or proprietary data was used. All results can be reproduced using this publicly available dataset and the provided annotation formats.
     
+This repository provides the core structure and training pipeline of our method.
+﻿
+This is a research implementation; reproduction of final results may require parameter tuning.
+﻿
