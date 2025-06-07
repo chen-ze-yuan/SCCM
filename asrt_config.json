@@ -1,0 +1,35 @@
+{
+    "dict_filename": "dict.txt",
+
+    "dataset":{
+        "train":[
+            {
+                "name": "aishell_train",
+                "data_list": "datalist/aishell/train.wav.lst",
+                "data_path": "./data",
+                "pinyin_list": "datalist/aishell/train_pinyin.txt",
+                "char_list": "datalist/aishell/train_char.txt"
+            }
+        ],
+
+        "dev":[
+            {
+                "name": "aishell_dev",
+                "data_list": "datalist/aishell/dev.wav.lst",
+                "data_path": "./data",
+                "pinyin_list": "datalist/aishell/dev_pinyin.txt",
+                "char_list": "datalist/aishell/dev_char.txt"
+            }
+        ],
+
+        "test":[
+            {
+                "name": "aishell_test",
+                "data_list": "datalist/aishell/test.wav.lst",
+                "data_path": "./data",
+                "pinyin_list": "datalist/aishell/test_pinyin.txt",
+                "char_list": "datalist/aishell/test_char.txt"
+            }
+        ]
+    }
+}
