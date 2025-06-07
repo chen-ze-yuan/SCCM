@@ -3,7 +3,9 @@ This is a speech-transformer model for end-to-end speech recognition. If you hav
 # Overview
 This repository includes:
 - Key components of the model architecture
-- Annotation and metadata descriptions
+- Ensemble_model
+- Pinyin_embedding
+-Train-stage
 ﻿
 - 🔗 [AiShell-1 Corpus Download](https://www.aishelltech.com/kysjcp)
 ﻿
