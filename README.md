@@ -5,7 +5,7 @@ This repository includes:
 - Key components of the model architecture
 - Ensemble_model
 - Pinyin_embedding
--Train-stage
+- Train-stage
 ﻿
 - 🔗 [AiShell-1 Corpus Download](https://www.aishelltech.com/kysjcp)
 ﻿
