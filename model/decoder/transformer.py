@@ -11,6 +11,7 @@ from model.module.ffn import PositionwiseFeedForward
 from model.module.attention import MultiHeadedSelfAttention, MultiHeadedCrossAttention, MultiHeadedSelfAttentionWithRelPos
 
 from model.decoder.utils import get_transformer_decoder_mask
+from typing import Optional, Dict
 
 
 
@@ -204,5 +205,68 @@ class TransformerDecoder(nn.Module):
         log_probs = F.log_softmax(logits[:, -1, :], dim=-1)  # logits [batch_size, 1, model_size]
 
         return log_probs, cache, attn_weights
+
+
+class PinyinFusionTransformerDecoder(TransformerDecoder):
+    """支持拼音特征融合的Transformer解码器"""
+
+    def __init__(self, vocab_size, d_model=512, n_heads=4, d_ff=1024, memory_dim=512, n_blocks=6, pos_dropout=0.0,
+                 slf_attn_dropout=0.0, src_attn_dropout=0.0, ffn_dropout=0.0,
+                 residual_dropout=0.1, activation='relu', normalize_before=True, concat_after=False,
+                 share_embedding=False):
+        super(TransformerDecoder, self).__init__()
+
+        self.decoder_type = 'transformer'
+        self.normalize_before = normalize_before
+        self.relative_positional = True
+
+        self.d_model = d_model
+
+        self.embedding = nn.Embedding(vocab_size, d_model)
+
+        self.pos_emb = PositionalEncoding(d_model, pos_dropout)
+
+        self.blocks = nn.ModuleList([
+            TransformerDecoderLayer(
+                n_heads, d_model, d_ff, memory_dim, slf_attn_dropout, src_attn_dropout,
+                ffn_dropout, residual_dropout, normalize_before=normalize_before, concat_after=concat_after,
+                relative_positional=True, activation=activation) for _ in range(n_blocks)
+        ])
+
+        if self.normalize_before:
+            self.after_norm = nn.LayerNorm(d_model)
+
+        self.output_layer = nn.Linear(d_model, vocab_size)
+
+        if share_embedding:
+            assert self.embedding.weight.size() == self.output_layer.weight.size()
+            self.output_layer.weight = self.embedding.weight
+
+        self.fc = nn.Linear(d_model + 128,d_model)
+
+    def forward_with_pinyin_fusion(
+            self,
+            targets: torch.Tensor,
+            encoder_outputs: torch.Tensor,
+            pinyin_features: torch.Tensor,
+            encoder_mask: Optional[torch.Tensor] = None,
+            target_mask: Optional[torch.Tensor] = None,
+    ) -> Dict[str, torch.Tensor]:
+        """
+        带拼音特征融合的前向传播
+
+        Args:
+            targets: (batch, target_length)
+            encoder_outputs: (batch, source_length, d_model)
+            pinyin_features: (batch, source_length, pinyin_embedding_dim)
+            encoder_mask: (batch, source_length)
+            target_mask: (batch, target_length, target_length)
+        """
+        # 特征融合
+        combined_features = torch.cat([encoder_outputs, pinyin_features], dim=-1)
+        fc = self.fc(combined_features)
+
+        # 调用父类的forward方法
+        return self.forward(targets, fc, encoder_mask)
 
 
