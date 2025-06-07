@@ -2,7 +2,7 @@
 This is a speech-transformer model for end-to-end speech recognition. If you have any questions, please email to me. (2113301009@gxu.edu.cn)
 # Overview
 This repository includes:
-- Key components of the model architecture
+- the model architecture
 - Ensemble_model
 - Pinyin_embedding
 - Train-stage
